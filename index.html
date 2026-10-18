@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#fbf7ef">
-<title>Dimas &amp; Diana — Undangan Pernikahan</title>
+<title>Dimas &amp; Dinda — Undangan Pernikahan</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +29,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 12px;
 }
 
 body {
@@ -38,6 +40,7 @@ body {
   line-height: 1.9;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 body.locked { overflow: hidden; }
@@ -72,7 +75,6 @@ p { margin-bottom: 10px; }
 
 .small { font-size: 11px; letter-spacing: .3px; color: var(--muted); }
 
-/* garis pemisah tipis, tanpa simbol */
 .divider {
   width: 56px;
   height: 1px;
@@ -80,7 +82,7 @@ p { margin-bottom: 10px; }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
-/* ---------- Muncul halus saat di-scroll ---------- */
+/* Animasi scroll */
 .reveal {
   opacity: 0;
   transform: translateY(18px);
@@ -91,7 +93,7 @@ p { margin-bottom: 10px; }
 .reveal.d2 { transition-delay: .24s; }
 .reveal.d3 { transition-delay: .36s; }
 
-/* ---------- COVER ---------- */
+/* Cover */
 #cover {
   position: fixed;
   inset: 0;
@@ -101,8 +103,7 @@ p { margin-bottom: 10px; }
   justify-content: center;
   overflow-y: auto;
   padding: 32px 26px;
-  background:
-    radial-gradient(ellipse at 50% 0%, #fffdf8 0%, var(--ivory) 55%, var(--paper) 100%);
+  background: radial-gradient(ellipse at 50% 0%, #fffdf8 0%, var(--ivory) 55%, var(--paper) 100%);
   transition: opacity 1s var(--ease), visibility 1s;
 }
 
@@ -125,7 +126,7 @@ p { margin-bottom: 10px; }
 
 @keyframes coverIn {
   from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: none; }
+  to { opacity: 1; transform: none; }
 }
 
 .cover-sub {
@@ -145,7 +146,6 @@ p { margin-bottom: 10px; }
 .cover-names span { display: block; }
 .cover-names .amp {
   margin: 8px 0;
-  font-family: var(--title);
   font-style: italic;
   font-size: 30px;
   color: var(--gold);
@@ -179,12 +179,15 @@ p { margin-bottom: 10px; }
   transition: background .35s var(--ease), color .35s var(--ease);
 }
 .open-button:hover,
-.open-button:focus-visible { background: var(--gold-dark); color: var(--ivory); outline: none; }
+.open-button:focus-visible {
+  background: var(--gold-dark);
+  color: var(--ivory);
+  outline: none;
+}
 .open-button:disabled { opacity: .7; cursor: wait; }
-
 #openingStatus { min-height: 20px; margin-top: 12px; }
 
-/* ---------- MUSIK ---------- */
+/* Musik */
 .music-button {
   position: fixed;
   top: calc(14px + env(safe-area-inset-top, 0px));
@@ -196,10 +199,10 @@ p { margin-bottom: 10px; }
   place-items: center;
   border-radius: 50%;
   color: var(--gold-dark);
-  background: rgba(251, 247, 239, .78);
+  background: rgba(251, 247, 239, .88);
   border: 1px solid rgba(176, 150, 96, .4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   opacity: 0;
   pointer-events: none;
   transition: opacity .8s var(--ease) .6s;
@@ -207,37 +210,67 @@ p { margin-bottom: 10px; }
 body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
 
 .music-button svg {
-  width: 19px; height: 19px;
-  fill: none; stroke: currentColor; stroke-width: 1.5;
-  stroke-linecap: round; stroke-linejoin: round;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.music-button.playing svg .note { animation: bob 2.4s ease-in-out infinite; transform-origin: center; }
+.music-button.playing svg .note {
+  animation: bob 2.4s ease-in-out infinite;
+  transform-origin: center;
+}
 @keyframes bob { 50% { transform: translateY(-1.5px); } }
 
-/* ---------- BACKGROUND BERSAMA ---------- */
+/* Background bersama */
 #sharedBackground {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
   background: var(--ivory);
   pointer-events: none;
 }
-#sharedBgVideo { display: block; width: 100%; height: 100%; object-fit: cover; }
-.shared-bg-overlay { position: absolute; inset: 0; background: rgba(251, 247, 239, .42); }
 
-/* ---------- VIDEO ---------- */
+#sharedBgVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shared-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(251, 247, 239, .48);
+}
+
+main, footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Video undangan */
 .video-section {
   position: relative;
   width: 100%;
   height: 100svh;
-  min-height: 560px;
+  min-height: 500px;
   overflow: hidden;
   background: var(--paper);
 }
-.invite-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 
-/* ---------- SECTION TEKS ---------- */
+.invite-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Bagian teks */
 .text-section {
   display: flex;
   align-items: center;
@@ -256,21 +289,26 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   line-height: 2;
 }
 
-/* ---------- COUNTDOWN ---------- */
+/* Countdown */
 .countdown {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   max-width: 420px;
   margin: 30px auto 26px;
 }
+
 .countdown-item { padding: 6px 2px; position: relative; }
+
 .countdown-item + .countdown-item::before {
   content: "";
   position: absolute;
-  left: 0; top: 18%; bottom: 18%;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
   width: 1px;
   background: rgba(176, 150, 96, .4);
 }
+
 .countdown-item strong {
   display: block;
   font-family: var(--title);
@@ -280,21 +318,32 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   color: var(--gold-dark);
   font-variant-numeric: tabular-nums;
 }
-.countdown-item span { font-size: 9px; letter-spacing: 2px; color: var(--muted); }
 
-.date-line { font-family: var(--title); font-size: 24px; font-style: italic; color: var(--gold-dark); }
+.countdown-item span {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
 
-/* ---------- KARTU (halus, menyatu dengan latar) ---------- */
+.date-line {
+  font-family: var(--title);
+  font-size: 24px;
+  font-style: italic;
+  color: var(--gold-dark);
+}
+
+/* Kartu */
 .card {
   margin: 26px auto 0;
   padding: 32px 24px;
   max-width: 420px;
-  background: rgba(251, 247, 239, .72);
+  background: rgba(251, 247, 239, .82);
   border: 1px solid rgba(176, 150, 96, .35);
   border-radius: 4px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
+
 .card h3 { font-size: 28px; font-weight: 500; }
 .card p { font-size: 12.5px; }
 
@@ -311,11 +360,15 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   transition: background .35s var(--ease), color .35s var(--ease);
 }
 .action-button:hover,
-.action-button:focus-visible { background: var(--gold-dark); color: var(--ivory); outline: none; }
+.action-button:focus-visible {
+  background: var(--gold-dark);
+  color: var(--ivory);
+  outline: none;
+}
 .action-button:disabled { opacity: .6; cursor: wait; }
 
-/* ---------- GIFT ---------- */
-.gift-section { background: rgba(251, 247, 239, .9); }
+/* Hadiah */
+.gift-section { background: rgba(251, 247, 239, .92); }
 
 .account-number {
   margin: 10px 0 2px;
@@ -328,7 +381,7 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
 }
 #copyStatus { min-height: 18px; margin-top: 10px; }
 
-/* ---------- RSVP ---------- */
+/* RSVP */
 .rsvp-section { padding-bottom: 130px; }
 
 .form-card {
@@ -337,12 +390,13 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   margin: 28px auto 0;
   padding: 26px 22px;
   text-align: left;
-  background: rgba(251, 247, 239, .8);
+  background: rgba(251, 247, 239, .88);
   border: 1px solid rgba(176, 150, 96, .35);
   border-radius: 4px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
+
 .form-card label {
   display: block;
   margin: 16px 0 6px;
@@ -367,14 +421,23 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   outline: none;
   transition: border-color .3s;
 }
+
 .form-card input:focus,
 .form-card select:focus,
-.form-card textarea:focus { border-bottom-color: var(--gold-dark); }
+.form-card textarea:focus {
+  border-bottom-color: var(--gold-dark);
+}
+
 .form-card textarea { min-height: 96px; resize: vertical; line-height: 1.7; }
 .form-card ::placeholder { color: #aaa391; }
 .form-card button { width: 100%; margin-top: 22px; }
 
-.status { margin-top: 12px; font-size: 11.5px; overflow-wrap: anywhere; color: var(--muted); }
+.status {
+  margin-top: 12px;
+  font-size: 11.5px;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+}
 
 .comments-list { max-width: 420px; margin: 34px auto 0; text-align: left; }
 .comments-list h3 { font-size: 28px; text-align: center; margin-bottom: 8px; }
@@ -385,7 +448,14 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   border-bottom: 1px solid rgba(176, 150, 96, .3);
   overflow-wrap: anywhere;
 }
-.comment-item strong { font-family: var(--title); font-size: 21px; font-weight: 600; color: var(--gold-dark); }
+
+.comment-item strong {
+  font-family: var(--title);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--gold-dark);
+}
+
 .comment-badge {
   display: inline-block;
   margin-left: 8px;
@@ -397,18 +467,26 @@ body:not(.locked) .music-button { opacity: 1; pointer-events: auto; }
   color: var(--muted);
   vertical-align: middle;
 }
+
 .comment-item p { margin: 4px 0 0; font-size: 12.5px; }
 .comment-date { display: block; margin-top: 6px; font-size: 10px; color: var(--muted); }
 
-/* ---------- FOOTER ---------- */
+/* Footer */
 footer {
   padding: 44px 22px 120px;
   text-align: center;
   background: rgba(243, 235, 220, .95);
 }
-footer .names { font-family: var(--title); font-style: italic; font-size: 38px; color: var(--gold-dark); line-height: 1.2; }
 
-/* ---------- NAVIGASI ---------- */
+footer .names {
+  font-family: var(--title);
+  font-style: italic;
+  font-size: 38px;
+  color: var(--gold-dark);
+  line-height: 1.2;
+}
+
+/* Navigasi */
 .wedding-nav {
   position: fixed;
   left: 50%;
@@ -422,12 +500,13 @@ footer .names { font-family: var(--title); font-style: italic; font-size: 38px; 
   padding: 8px;
   border: 1px solid rgba(176, 150, 96, .4);
   border-radius: 40px;
-  background: rgba(251, 247, 239, .82);
+  background: rgba(251, 247, 239, .9);
   box-shadow: 0 8px 30px rgba(74, 59, 43, .1);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: transform .9s var(--ease) .5s;
 }
+
 body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
 
 .nav-item {
@@ -438,15 +517,22 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
   color: #a89d82;
   transition: color .3s;
 }
+
 .nav-item svg {
-  width: 20px; height: 20px;
-  fill: none; stroke: currentColor; stroke-width: 1.5;
-  stroke-linecap: round; stroke-linejoin: round;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
+
 .nav-item.active { color: var(--gold-dark); }
 .nav-item.active::after {
   content: "";
-  width: 3px; height: 3px;
+  width: 3px;
+  height: 3px;
   margin-top: 2px;
   border-radius: 50%;
   background: var(--gold);
@@ -468,8 +554,9 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
 
 <body class="locked">
 
+<!-- BACKGROUND: dimuat hanya ketika diperlukan -->
 <div id="sharedBackground" aria-hidden="true">
-  <video id="sharedBgVideo" muted loop playsinline preload="metadata">
+  <video id="sharedBgVideo" muted loop playsinline preload="none">
     <source src="bg.mp4" type="video/mp4">
   </video>
   <div class="shared-bg-overlay"></div>
@@ -484,7 +571,7 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
     <h1 class="cover-names">
       <span>Dimas</span>
       <span class="amp">&amp;</span>
-      <span>Diana</span>
+      <span>Dinda</span>
     </h1>
 
     <div class="divider"></div>
@@ -499,9 +586,10 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
   </div>
 </div>
 
-<audio id="music" src="musik.mp3" loop preload="auto"></audio>
+<audio id="music" src="musik.mp3" loop preload="none"></audio>
 
-<button id="musicButton" class="music-button" type="button" aria-label="Nyalakan musik" title="Musik">
+<button id="musicButton" class="music-button" type="button"
+        aria-label="Nyalakan musik" title="Musik">
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <g class="note">
       <path d="M9 18V5l12-2v13"/>
@@ -514,12 +602,19 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
 
 <main>
 
+  <!-- VIDEO 1 -->
   <section class="video-section" id="home">
-    <video class="invite-video" id="homeVideo" src="hal1.mp4" muted playsinline loop preload="auto"></video>
+    <video class="invite-video" id="homeVideo"
+           muted playsinline loop preload="none">
+      <source src="hal1.mp4" type="video/mp4">
+    </video>
   </section>
 
+  <!-- VIDEO 2 -->
   <section class="video-section" id="acara">
-    <video class="invite-video" src="hal2.mp4" muted playsinline loop preload="metadata"></video>
+    <video class="invite-video" muted playsinline loop preload="none">
+      <source src="hal2.mp4" type="video/mp4">
+    </video>
   </section>
 
   <!-- COUNTDOWN -->
@@ -562,17 +657,21 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
         <div class="divider"></div>
         <p id="venueText">Nama tempat dan alamat acara</p>
         <p id="eventTimeText">Waktu acara akan diumumkan.</p>
-        <a id="mapsLink" class="action-button" href="https://maps.google.com/"
+        <a id="mapsLink" class="action-button"
+           href="https://www.google.com/maps"
            target="_blank" rel="noopener noreferrer">LIHAT PETA</a>
       </div>
     </div>
   </section>
 
+  <!-- VIDEO 3 -->
   <section class="video-section" id="videoTambahan">
-    <video class="invite-video" src="hal3.mp4" muted playsinline loop preload="metadata"></video>
+    <video class="invite-video" muted playsinline loop preload="none">
+      <source src="hal3.mp4" type="video/mp4">
+    </video>
   </section>
 
-  <!-- GIFT -->
+  <!-- HADIAH -->
   <section class="text-section gift-section" id="gift">
     <div class="section-inner">
       <p class="eyebrow reveal">Tanda Kasih</p>
@@ -608,12 +707,13 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
       </p>
 
       <form id="commentForm" class="form-card reveal d3">
-        <!-- kolom jebakan bot: tidak terlihat oleh tamu -->
-        <input type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+        <input type="text" id="website" tabindex="-1" autocomplete="off"
+               aria-hidden="true"
                style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
 
         <label for="commentName">NAMA</label>
-        <input id="commentName" maxlength="60" placeholder="Nama Anda" autocomplete="name" required>
+        <input id="commentName" maxlength="60" placeholder="Nama Anda"
+               autocomplete="name" required>
 
         <label for="attendance">KEHADIRAN</label>
         <select id="attendance" required>
@@ -623,7 +723,8 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
         </select>
 
         <label for="message">UCAPAN &amp; DOA</label>
-        <textarea id="message" maxlength="1000" placeholder="Tulis ucapan Anda di sini" required></textarea>
+        <textarea id="message" maxlength="1000"
+                  placeholder="Tulis ucapan Anda di sini" required></textarea>
 
         <button id="submitComment" class="action-button" type="submit">KIRIM UCAPAN</button>
         <p id="formStatus" class="status" role="status"></p>
@@ -631,9 +732,7 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
 
       <div class="comments-list">
         <h3>Ucapan dari Tamu</h3>
-        <p id="commentsLoading" class="status" style="text-align:center">
-          Memuat ucapan...
-        </p>
+        <p id="commentsLoading" class="status" style="text-align:center">Memuat ucapan...</p>
         <div id="commentsList"></div>
       </div>
     </div>
@@ -648,6 +747,7 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
   <p class="small">Atas doa, kehadiran, dan kasih yang diberikan.</p>
 </footer>
 
+<!-- NAVIGASI IKON SAJA -->
 <nav class="wedding-nav" aria-label="Navigasi undangan">
   <a href="#home" class="nav-item active" data-target="home" aria-label="Beranda" title="Beranda">
     <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-6H9v6H3z"/></svg>
@@ -668,123 +768,122 @@ body:not(.locked) .wedding-nav { transform: translate(-50%, 0); }
 const CONFIG = {
   brideName: "Dinda",
   groomName: "Dimas",
+
+  // Format: YYYY-MM-DDTHH:MM:SS+07:00
   weddingDate: "2026-11-30T13:00:00+07:00",
 
-  venue: "Desa Magersari RT 001/RW 001,Kecamatan Patebon,Kabupaten Kendal",
-  eventTime: "Pukul 13.00 WIB - Selesai",
-  mapsUrl: "https://maps.google.com/?q=lokasi+acara",
+  venue: "Desa Magersari RT 001/RW 001, Kecamatan Patebon, Kabupaten Kendal",
+  eventTime: "Pukul 13.00 WIB - selesai",
 
   bankName: "BCA",
   accountNumber: "1234567890",
   accountOwner: "Dinda Rahayu",
 
-  /* URL Web App dari Google Apps Script (berakhiran /exec) */
+  // URL Web App Google Apps Script yang berakhiran /exec
   sheetsUrl: "https://script.google.com/macros/s/AKfycbzABozyH_vGwAkjrLnvT0NEXONfWHviQ_M4f26y87pvsnY-AS1wStDwmsskUiE_2u0O2g/exec"
 };
 
-/* ================= DATA ================= */
 const $ = (id) => document.getElementById(id);
 
+/* ================= DATA UNDANGAN ================= */
 (function fillData() {
   const names = document.querySelector(".cover-names");
   names.replaceChildren();
-  const a = document.createElement("span"); a.textContent = CONFIG.groomName;
-  const amp = document.createElement("span"); amp.className = "amp"; amp.textContent = "&";
-  const b = document.createElement("span"); b.textContent = CONFIG.brideName;
-  names.append(a, amp, b);
+
+  const groom = document.createElement("span");
+  groom.textContent = CONFIG.groomName;
+
+  const amp = document.createElement("span");
+  amp.className = "amp";
+  amp.textContent = "&";
+
+  const bride = document.createElement("span");
+  bride.textContent = CONFIG.brideName;
+
+  names.append(groom, amp, bride);
 
   document.querySelector("footer .names").textContent =
     CONFIG.groomName + " & " + CONFIG.brideName;
+
+  document.title =
+    CONFIG.groomName + " & " + CONFIG.brideName + " — Undangan Pernikahan";
 
   const guest = new URLSearchParams(location.search).get("to");
   $("guestName").textContent = guest ? guest.slice(0, 100) : "Tamu Undangan";
 
   $("venueText").textContent = CONFIG.venue;
   $("eventTimeText").textContent = CONFIG.eventTime;
-  $("mapsLink").href = CONFIG.mapsUrl;
+
+  // Google Maps mencari nama tempat/alamat secara otomatis.
+  const mapQuery = encodeURIComponent(CONFIG.venue);
+  $("mapsLink").href =
+    "https://www.google.com/maps/search/?api=1&query=" + mapQuery;
+
   $("bankName").textContent = CONFIG.bankName;
   $("accountNumber").textContent = CONFIG.accountNumber;
   $("accountOwner").textContent = "a.n. " + CONFIG.accountOwner;
 })();
 
-/* ================= TOMBOL BACK =================
-   Link #anchor menambah riwayat browser sehingga tombol back
-   hanya "mundur ke bagian sebelumnya". Di sini navigasi memakai
-   scrollIntoView tanpa mengubah URL, jadi back langsung keluar. */
-if (location.hash) {
-  history.replaceState(null, "", location.pathname + location.search);
-}
-if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-
+/* ================= NAVIGASI ================= */
 const navItems = document.querySelectorAll(".nav-item");
 
+function setActive(id) {
+  navItems.forEach((item) => {
+    item.classList.toggle("active", item.dataset.target === id);
+  });
+}
+
 navItems.forEach((item) => {
-  item.addEventListener("click", (e) => {
-    e.preventDefault();
+  item.addEventListener("click", (event) => {
+    event.preventDefault();
     const target = $(item.dataset.target);
     if (!target) return;
+
     target.scrollIntoView({ behavior: "smooth", block: "start" });
     setActive(item.dataset.target);
   });
 });
 
-function setActive(id) {
-  navItems.forEach((n) => n.classList.toggle("active", n.dataset.target === id));
-}
-
-/* ================= BUKA UNDANGAN ================= */
+/* ================= COVER DAN BUKA UNDANGAN ================= */
 const cover = $("cover");
 const openButton = $("openButton");
 const openingStatus = $("openingStatus");
 const homeVideo = $("homeVideo");
 const sharedBgVideo = $("sharedBgVideo");
 
-let isOpening = false;
 let invitationOpened = false;
-let bgVisible = false;
-
-function playHomeVideoFromStart() {
-  homeVideo.pause();
-  const start = () => {
-    try { homeVideo.currentTime = 0; } catch (e) {}
-    homeVideo.play().catch(() => {});
-  };
-  if (homeVideo.readyState >= 2) start();
-  else {
-    homeVideo.addEventListener("canplay", start, { once: true });
-    homeVideo.load();
-  }
-}
 
 function openInvitation() {
-  if (isOpening) return;
-  isOpening = true;
+  if (invitationOpened) return;
+
+  invitationOpened = true;
   openButton.disabled = true;
   openButton.textContent = "SELAMAT DATANG";
 
+  // Musik dimulai setelah pengguna menekan tombol.
   playMusic();
 
-  setTimeout(() => {
-    cover.classList.add("hidden");
-    document.body.classList.remove("locked");
-    invitationOpened = true;
-    window.scrollTo(0, 0);
-    playHomeVideoFromStart();
-    if (bgVisible) sharedBgVideo.play().catch(() => {});
-  }, 450);
+  cover.classList.add("hidden");
+  document.body.classList.remove("locked");
+
+  window.scrollTo(0, 0);
+
+  // Pemantau video akan memutar video home ketika terlihat.
+  updateVideoPlayback();
 }
+
 openButton.addEventListener("click", openInvitation);
 
 /* ================= MUSIK ================= */
 const music = $("music");
 const musicButton = $("musicButton");
 const muteLine = musicButton.querySelector(".mute-line");
-let pausedByTab = false;
 
 function drawMusicIcon() {
   const playing = !music.paused;
   muteLine.style.display = playing ? "none" : "block";
   musicButton.classList.toggle("playing", playing);
+
   const label = playing ? "Matikan musik" : "Nyalakan musik";
   musicButton.setAttribute("aria-label", label);
   musicButton.title = label;
@@ -794,71 +893,114 @@ async function playMusic() {
   try {
     await music.play();
     openingStatus.textContent = "";
-  } catch (e) {
-    openingStatus.textContent = "Musik belum bisa diputar. Ketuk ikon musik untuk mencoba lagi.";
+  } catch (error) {
+    openingStatus.textContent =
+      "Musik belum bisa diputar otomatis. Ketuk ikon musik untuk mencoba lagi.";
   }
   drawMusicIcon();
 }
 
 musicButton.addEventListener("click", () => {
-  pausedByTab = false;
-  if (music.paused) playMusic();
-  else { music.pause(); drawMusicIcon(); }
+  if (music.paused) {
+    playMusic();
+  } else {
+    music.pause();
+    drawMusicIcon();
+  }
 });
+
 music.addEventListener("play", drawMusicIcon);
 music.addEventListener("pause", drawMusicIcon);
 drawMusicIcon();
 
-/* musik berhenti saat tab disembunyikan / pindah aplikasi, lanjut saat kembali */
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    if (!music.paused) { music.pause(); pausedByTab = true; }
-  } else if (pausedByTab && invitationOpened) {
-    pausedByTab = false;
-    music.play().catch(() => {});
-  }
-});
+/* ================= OPTIMASI VIDEO ================= */
+const inviteVideos = [...document.querySelectorAll(".invite-video")];
+const bgSections = [...document.querySelectorAll("#countdown, #lokasi, #rsvp")];
 
-/* ================= VIDEO ================= */
-const inviteVideos = document.querySelectorAll(".invite-video");
-inviteVideos.forEach((v) => v.pause());
+let activeBgSection = false;
+let videoObserver;
+let bgObserver;
+
+/*
+  Hanya video yang terlihat yang diputar.
+  Video lainnya dijeda agar tidak membebani HP.
+*/
+function updateVideoPlayback() {
+  if (!invitationOpened) {
+    inviteVideos.forEach((video) => video.pause());
+    sharedBgVideo.pause();
+    return;
+  }
+
+  inviteVideos.forEach((video) => {
+    const rect = video.getBoundingClientRect();
+    const visible =
+      rect.top < window.innerHeight * 0.85 &&
+      rect.bottom > window.innerHeight * 0.15;
+
+    if (visible) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+
+  if (activeBgSection) {
+    sharedBgVideo.play().catch(() => {});
+  } else {
+    sharedBgVideo.pause();
+  }
+}
 
 if ("IntersectionObserver" in window) {
-  const videoObserver = new IntersectionObserver((entries) => {
+  videoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      const v = entry.target;
-      if (!invitationOpened) { v.pause(); return; }
+      const video = entry.target;
 
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-        if (v !== homeVideo && v.dataset.started !== "true") {
-          try { v.currentTime = 0; } catch (e) {}
-          v.dataset.started = "true";
-        }
-        v.play().catch(() => {});
+      if (!invitationOpened) {
+        video.pause();
+        return;
+      }
+
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+        video.play().catch(() => {});
       } else {
-        v.pause();
+        video.pause();
       }
     });
-  }, { threshold: [0, 0.5, 1] });
-  inviteVideos.forEach((v) => videoObserver.observe(v));
+  }, {
+    threshold: [0, 0.15, 0.5]
+  });
 
-  /* background bersama hanya jalan saat bagiannya terlihat (hemat baterai) */
-  const bgSections = {};
-  const bgObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      bgSections[entry.target.id] = entry.isIntersecting;
+  inviteVideos.forEach((video) => {
+    video.pause();
+    videoObserver.observe(video);
+  });
+
+  /*
+    Background hanya aktif ketika countdown, lokasi, atau RSVP
+    terlihat di layar. Status dihitung ulang agar tidak salah
+    ketika beberapa section berdekatan.
+  */
+  bgObserver = new IntersectionObserver(() => {
+    activeBgSection = bgSections.some((section) => {
+      const rect = section.getBoundingClientRect();
+      return rect.top < window.innerHeight * 0.85 &&
+             rect.bottom > window.innerHeight * 0.15;
     });
-    bgVisible = Object.values(bgSections).some(Boolean);
-    if (invitationOpened) {
-      if (bgVisible) sharedBgVideo.play().catch(() => {});
-      else sharedBgVideo.pause();
+
+    if (invitationOpened && activeBgSection) {
+      sharedBgVideo.play().catch(() => {});
+    } else {
+      sharedBgVideo.pause();
     }
-  }, { threshold: 0.1 });
+  }, {
+    threshold: [0, 0.1]
+  });
 
-  document.querySelectorAll("#countdown, #lokasi, #rsvp")
-    .forEach((s) => { bgSections[s.id] = false; bgObserver.observe(s); });
+  bgSections.forEach((section) => bgObserver.observe(section));
 
-  /* animasi muncul halus */
+  // Animasi elemen teks
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -866,69 +1008,121 @@ if ("IntersectionObserver" in window) {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15 });
-  document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+  }, { threshold: 0.12 });
 
-  /* penanda menu aktif */
+  document.querySelectorAll(".reveal").forEach((element) => {
+    revealObserver.observe(element);
+  });
+
+  // Menu aktif mengikuti bagian yang terlihat
+  const navSections = document.querySelectorAll(
+    "#home, #acara, #lokasi, #rsvp"
+  );
+
   const sectionObserver = new IntersectionObserver((entries) => {
     const visible = entries
-      .filter((e) => e.isIntersecting)
+      .filter((entry) => entry.isIntersecting)
       .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
     if (visible.length) setActive(visible[0].target.id);
-  }, { rootMargin: "-20% 0px -40% 0px", threshold: [0.1, 0.25, 0.5] });
-  document.querySelectorAll("#home, #acara, #lokasi, #rsvp")
-    .forEach((s) => sectionObserver.observe(s));
+  }, {
+    rootMargin: "-20% 0px -40% 0px",
+    threshold: [0.1, 0.25, 0.5]
+  });
+
+  navSections.forEach((section) => sectionObserver.observe(section));
+
 } else {
-  document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+  // Cadangan untuk browser lama
+  document.querySelectorAll(".reveal").forEach((element) => {
+    element.classList.add("in");
+  });
+
+  window.addEventListener("scroll", updateVideoPlayback, { passive: true });
+  window.addEventListener("resize", updateVideoPlayback);
 }
+
+/* Jeda video ketika tab disembunyikan */
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    inviteVideos.forEach((video) => video.pause());
+    sharedBgVideo.pause();
+    music.pause();
+    drawMusicIcon();
+  } else if (invitationOpened) {
+    updateVideoPlayback();
+  }
+});
 
 /* ================= COUNTDOWN ================= */
 const weddingTime = new Date(CONFIG.weddingDate).getTime();
 
 $("weddingDateText").textContent = Number.isFinite(weddingTime)
   ? new Date(weddingTime).toLocaleDateString("id-ID", {
-      weekday: "long", day: "numeric", month: "long", year: "numeric"
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
     })
   : "Tanggal acara belum diatur.";
 
 function updateCountdown() {
-  const msg = $("countdownMessage");
-  if (!Number.isFinite(weddingTime)) { msg.textContent = "Periksa tanggal acara."; return; }
+  const message = $("countdownMessage");
 
-  const diff = weddingTime - Date.now();
-  if (diff <= 0) {
-    ["days", "hours", "minutes", "seconds"].forEach((id) => { $(id).textContent = "0"; });
-    msg.textContent = "Hari bahagia telah tiba.";
+  if (!Number.isFinite(weddingTime)) {
+    message.textContent = "Periksa tanggal acara.";
     return;
   }
+
+  const diff = weddingTime - Date.now();
+
+  if (diff <= 0) {
+    ["days", "hours", "minutes", "seconds"].forEach((id) => {
+      $(id).textContent = "0";
+    });
+    message.textContent = "Hari bahagia telah tiba.";
+    return;
+  }
+
   $("days").textContent = Math.floor(diff / 86400000);
   $("hours").textContent = Math.floor((diff % 86400000) / 3600000);
   $("minutes").textContent = Math.floor((diff % 3600000) / 60000);
   $("seconds").textContent = Math.floor((diff % 60000) / 1000);
-  msg.textContent = "Sampai jumpa di hari istimewa kami.";
+
+  message.textContent = "Sampai jumpa di hari istimewa kami.";
 }
+
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
 /* ================= SALIN REKENING ================= */
 $("copyAccount").addEventListener("click", async () => {
   const status = $("copyStatus");
+
   try {
     await navigator.clipboard.writeText(CONFIG.accountNumber);
     status.textContent = "Nomor rekening berhasil disalin.";
-  } catch (e) {
-    const t = document.createElement("textarea");
-    t.value = CONFIG.accountNumber;
-    t.style.cssText = "position:fixed;opacity:0";
-    document.body.appendChild(t);
-    t.select();
-    const ok = document.execCommand("copy");
-    t.remove();
-    status.textContent = ok ? "Nomor rekening berhasil disalin." : "Silakan salin nomor rekening secara manual.";
+  } catch (error) {
+    const textarea = document.createElement("textarea");
+    textarea.value = CONFIG.accountNumber;
+    textarea.style.cssText = "position:fixed;opacity:0";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch (e) {}
+
+    textarea.remove();
+
+    status.textContent = copied
+      ? "Nomor rekening berhasil disalin."
+      : "Silakan salin nomor rekening secara manual: " + CONFIG.accountNumber;
   }
 });
 
-/* ================= UCAPAN (GOOGLE SHEETS) ================= */
+/* ================= UCAPAN GOOGLE SHEETS ================= */
 const commentForm = $("commentForm");
 const formStatus = $("formStatus");
 const commentsList = $("commentsList");
@@ -937,7 +1131,7 @@ const submitComment = $("submitComment");
 
 const sheetsReady =
   typeof CONFIG.sheetsUrl === "string" &&
-  CONFIG.sheetsUrl.indexOf("https://script.google.com/") === 0;
+  CONFIG.sheetsUrl.startsWith("https://script.google.com/");
 
 function renderComments(items) {
   commentsList.replaceChildren();
@@ -946,29 +1140,34 @@ function renderComments(items) {
     commentsLoading.textContent = "Belum ada ucapan. Jadilah yang pertama!";
     return;
   }
+
   commentsLoading.textContent = "";
 
-  items.forEach((d) => {
+  items.forEach((data) => {
     const item = document.createElement("div");
     item.className = "comment-item";
 
     const name = document.createElement("strong");
-    name.textContent = d.name || "Tamu";
+    name.textContent = data.name || "Tamu";
 
     const badge = document.createElement("span");
     badge.className = "comment-badge";
-    badge.textContent = d.attendance || "—";
+    badge.textContent = data.attendance || "—";
 
     const message = document.createElement("p");
-    message.textContent = d.message || "";
+    message.textContent = data.message || "";
 
     const date = document.createElement("span");
     date.className = "comment-date";
-    const t = new Date(d.time);
-    if (!isNaN(t.getTime())) {
-      date.textContent = t.toLocaleString("id-ID", {
-        day: "numeric", month: "short", year: "numeric",
-        hour: "2-digit", minute: "2-digit"
+
+    const time = new Date(data.time);
+    if (!isNaN(time.getTime())) {
+      date.textContent = time.toLocaleString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
       });
     }
 
@@ -979,29 +1178,44 @@ function renderComments(items) {
 
 async function loadComments() {
   if (!sheetsReady) {
-    commentsLoading.textContent = "Ucapan online belum aktif. URL Google Sheets belum diisi.";
+    commentsLoading.textContent =
+      "Ucapan online belum aktif. URL Google Sheets belum diisi.";
     return;
   }
+
   commentsLoading.textContent = "Memuat ucapan...";
+
   try {
-    const res = await fetch(CONFIG.sheetsUrl, { cache: "no-store" });
-    const data = await res.json();
+    const response = await fetch(CONFIG.sheetsUrl, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    const data = await response.json();
     if (!data.ok) throw new Error(data.error || "Gagal memuat");
+
     renderComments(data.items || []);
   } catch (error) {
-    commentsLoading.textContent = "Ucapan belum bisa dimuat. Coba muat ulang halaman.";
-    console.error(error);
+    commentsLoading.textContent =
+      "Ucapan belum bisa dimuat. Periksa koneksi atau pengaturan Google Apps Script.";
+    console.error("Gagal memuat ucapan:", error);
   }
 }
+
 loadComments();
 
 commentForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!sheetsReady) {
-    formStatus.textContent = "Ucapan online belum aktif. Isi URL Google Sheets terlebih dahulu.";
+    formStatus.textContent =
+      "Ucapan online belum aktif. Periksa URL Google Sheets.";
     return;
   }
+
+  // Cegah kiriman bot melalui kolom tersembunyi.
+  if ($("website").value.trim() !== "") return;
 
   const name = $("commentName").value.trim();
   const attendance = $("attendance").value;
@@ -1017,20 +1231,29 @@ commentForm.addEventListener("submit", async (event) => {
 
   try {
     const body = new URLSearchParams({
-      name, attendance, message,
-      website: $("website") ? $("website").value : ""
+      name,
+      attendance,
+      message,
+      website: $("website").value
     });
 
-    const res = await fetch(CONFIG.sheetsUrl, { method: "POST", body });
-    const data = await res.json();
+    const response = await fetch(CONFIG.sheetsUrl, {
+      method: "POST",
+      body
+    });
+
+    if (!response.ok) throw new Error("HTTP " + response.status);
+
+    const data = await response.json();
     if (!data.ok) throw new Error(data.error || "Gagal mengirim");
 
     commentForm.reset();
     formStatus.textContent = "Terima kasih atas ucapan dan doa Anda.";
-    loadComments();
+    await loadComments();
   } catch (error) {
-    formStatus.textContent = "Gagal mengirim ucapan. Silakan coba lagi.";
-    console.error(error);
+    formStatus.textContent =
+      "Gagal mengirim ucapan. Silakan coba lagi.";
+    console.error("Gagal mengirim ucapan:", error);
   } finally {
     submitComment.disabled = false;
   }
